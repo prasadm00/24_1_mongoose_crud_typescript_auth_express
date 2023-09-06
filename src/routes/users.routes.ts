@@ -9,7 +9,7 @@ export const userRouter = express.Router()
 userRouter.post('/', UserController.addUser)
 
 //get users
-userRouter.get('/', UserController.getUsers)
+userRouter.get('/', authenticateToken, UserController.getUsers)
 
 //get single user
 userRouter.get('/:id', authenticateToken, UserController.getAUser)

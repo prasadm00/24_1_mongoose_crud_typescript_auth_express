@@ -32,7 +32,8 @@ class authController {
                 lastName: userData.lastName,
                 email: userData.email,
                 age: userData.age,
-                gender: userData.gender
+                gender: userData.gender,
+                role: userData.role
             };
 
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET || '', { expiresIn: '180s' });

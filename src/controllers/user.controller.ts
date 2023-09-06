@@ -19,11 +19,19 @@ class userController {
             email: req.body.email,
             password: hashedPassword,
             age: req.body.age,
-            gender: req.body.gender
+            gender: req.body.gender,
+            role: req.body.role
         }
         //validating the request
         const { error, value } = UserschemaValidate.validate(data)
 
+        const userData = await userServices.getUserByEmail(data.email)
+        if (userData) {
+            return res.status(409).json({
+                message: "User already exist.",
+                success: false
+            });
+        }
         if (error) {
             console.log("Error", error);
             res.send(error.message)
@@ -38,9 +46,17 @@ class userController {
 
     //get all users
     getUsers = async (req: Request, res: Response) => {
+        let token = req.headers['authorization'] || '';
+        let data = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
         console.log("Inside getUsers");
-        const users = await userServices.getUsers()
-        res.send(users)
+        if (data.role === 'admin') {
+            const users = await userServices.getUsers()
+            return res.status(200).json({ users: users, success: true })
+        }
+        res.status(401).json({
+            message: "Do not have required permissions.",
+            success: false
+        });
     }
 
 
@@ -77,7 +93,8 @@ class userController {
                 lastName: userData.lastName,
                 email: userData.email,
                 age: userData.age,
-                gender: userData.gender
+                gender: userData.gender,
+                role: userData.role
             };
 
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET || '', { expiresIn: '180s' });

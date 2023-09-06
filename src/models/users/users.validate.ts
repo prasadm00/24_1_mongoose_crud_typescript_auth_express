@@ -6,7 +6,6 @@ export const UserschemaValidate = Joi.object({
     lastName: Joi.string().required(),
     email: Joi.string().required(),
     password: Joi.string()
-        //.pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
         .required()
         .messages({
             "string.pattern.base": `Password should be between 3 to 30 characters and contain letters or numbers only`,
@@ -16,4 +15,5 @@ export const UserschemaValidate = Joi.object({
     ,
     age: Joi.number().required(),
     gender: Joi.string().required(),
+    role: Joi.string().required()
 })
