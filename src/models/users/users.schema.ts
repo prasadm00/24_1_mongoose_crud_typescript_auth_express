@@ -12,7 +12,8 @@ const UserSchema = new Mongoose.Schema({
         default: new Date(),
     },
     gender: String,
-    role: String
+    role: String,
+    provider: String
 
 });
 

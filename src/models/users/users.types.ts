@@ -9,7 +9,8 @@ export interface IUser {
     age: number;
     lastUpdated?: Date;
     gender: String;
-    role: String
+    role: String;
+    provider: String
 }
 
 export interface IUserDocument extends IUser, Document { }

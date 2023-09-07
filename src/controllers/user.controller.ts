@@ -20,7 +20,8 @@ class userController {
             password: hashedPassword,
             age: req.body.age,
             gender: req.body.gender,
-            role: req.body.role
+            role: req.body.role,
+            provider: req.body.provider
         }
         //validating the request
         const { error, value } = UserschemaValidate.validate(data)
@@ -79,11 +80,19 @@ class userController {
         }
         const userData = await userServices.getUserByEmail(email)
         console.log("🚀 ~ file: user.controller.ts:65 ~ userController ~ loginUser= ~ userData:", userData)
+
         //@ts-ignore
         if (!userData) {
             return res.status(401).json({
                 message: "User doesnot exist.",
                 success: false
+            });
+        }
+
+        if (userData.provider === "Google" || userData.provider === "GitHub") {
+            return res.status(401).json({
+                status: "fail",
+                message: `Use ${userData.provider} OAuth2 instead`,
             });
         }
         if (await bcrypt.compare(password, userData.password)) {
@@ -94,7 +103,8 @@ class userController {
                 email: userData.email,
                 age: userData.age,
                 gender: userData.gender,
-                role: userData.role
+                role: userData.role,
+                provider: userData.provider
             };
 
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET || '', { expiresIn: '180s' });
@@ -106,6 +116,8 @@ class userController {
                 accessToken,
                 refreshToken,
                 user
+            }).cookie("token", accessToken, {
+                expires: new Date(Date.now() + 1 * 60 * 1000),
             });
         } else {
             return res.status(401).json({
