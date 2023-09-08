@@ -16,5 +16,6 @@ export const UserschemaValidate = Joi.object({
     age: Joi.number().required(),
     gender: Joi.string().required(),
     role: Joi.string().required(),
-    provider: Joi.string()
+    provider: Joi.string(),
+    googleId: Joi.string()
 })

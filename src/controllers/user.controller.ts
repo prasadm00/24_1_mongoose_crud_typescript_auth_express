@@ -4,7 +4,6 @@ import { UserschemaValidate } from '../models/users/users.validate'
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
-
 class userController {
 
     //add user controller
@@ -47,9 +46,9 @@ class userController {
 
     //get all users
     getUsers = async (req: Request, res: Response) => {
+        console.log("Inside getUsers");
         let token = req.headers['authorization'] || '';
         let data = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-        console.log("Inside getUsers");
         if (data.role === 'admin') {
             const users = await userServices.getUsers()
             return res.status(200).json({ users: users, success: true })
@@ -79,7 +78,6 @@ class userController {
             res.status(400).send("All input is required");
         }
         const userData = await userServices.getUserByEmail(email)
-        console.log("🚀 ~ file: user.controller.ts:65 ~ userController ~ loginUser= ~ userData:", userData)
 
         //@ts-ignore
         if (!userData) {
@@ -106,9 +104,7 @@ class userController {
                 role: userData.role,
                 provider: userData.provider
             };
-
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET || '', { expiresIn: '180s' });
-
             const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET || '');
 
             return res.status(200).json({
@@ -125,7 +121,6 @@ class userController {
                 success: false
             });
         }
-
     }
 
     //update user
@@ -135,7 +130,6 @@ class userController {
         res.send(user)
     }
 
-
     //delete a user
     deleteUser = async (req: Request, res: Response) => {
         const id = req.params.id
@@ -144,5 +138,4 @@ class userController {
     }
 }
 
-//export class
 export const UserController = new userController()

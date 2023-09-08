@@ -2,12 +2,14 @@ import { UserModel } from '../models/users/users.model'
 export class userService {
     //create a user
     async createUser(data: any) {
+        console.log("Inside createUser");
         try {
             const newUser = await UserModel.create(data)
             return newUser
 
         } catch (error) {
-            console.log(error)
+
+            console.log("Error while creating user", error)
         }
     }
 
@@ -39,9 +41,6 @@ export class userService {
     //update a user
     async updateUser(id: string, data: any) {
         try {
-            //pass the id of the object you want to update
-            //data is for the new body you are updating the old one with
-            //new:true, so the dats being returned, is the update one
             const userz = await UserModel.findByIdAndUpdate({ _id: id }, data, { new: true })
             if (!userz) {
                 return "user not available"
@@ -70,10 +69,10 @@ export class userService {
             let user = await UserModel.findOne({ email: email })
             return user;
         } catch (error) {
-            console.log(error);
+            console.log("Error while getting user by email.", error);
         }
     }
 }
 
-//export the class
+
 export const userServices = new userService()

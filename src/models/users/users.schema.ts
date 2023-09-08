@@ -13,7 +13,8 @@ const UserSchema = new Mongoose.Schema({
     },
     gender: String,
     role: String,
-    provider: String
+    provider: String,
+    googleId: String
 
 });
 

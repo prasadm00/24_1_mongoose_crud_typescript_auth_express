@@ -14,10 +14,8 @@ function getGoogleOAuthUrl() {
             'https://www.googleapis.com/auth/userinfo.email'
         ].join(' ')
     }
-    console.log("🚀 ~ file: getGoogleUrl.ts:16 ~ getGoogleOAuthUrl ~ options:", options)
 
     const qs = new URLSearchParams(options)
-    console.log("QS===>>>", qs.toString());
 
     return `${rootUrl}?${qs.toString()}`
 }

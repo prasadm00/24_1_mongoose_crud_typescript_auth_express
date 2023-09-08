@@ -75,12 +75,10 @@ export async function getGoogleUser({
 
         return data;
     } catch (err: any) {
-        console.log(err);
+        console.log("Error fetching google user", err);
         throw Error(err);
     }
 }
-
-// 👇 GitHub OAuth
 
 type GitHubOauthToken = {
     access_token: string;

@@ -45,3 +45,25 @@ To automatically compile your code whenever changes are made, use the following 
 ## Step 6: Connecting to Mongoose
 - 1. Install Mongoose:
   `npm i mongoose`
+
+
+
+
+
+## .env to add
+
+`PORT=8000
+DB_CONN_STRING=mongodb://localhost:27017
+DB_NAME=wikiDB
+USERS_COLLECTION_NAME=users
+
+ACCESS_TOKEN_SECRET=
+REFRESH_TOKEN_SECRET=
+
+GOOGLE_OAUTH_CLIENT_ID= 
+GOOGLE_OAUTH_CLIENT_SECRET=
+GOOGLE_OAUTH_REDIRECT=/api/sessions/oauth/google
+RED1=/oauth/google
+TOKEN_EXPIRES_IN=10
+REDIRECT_URI=/auth/google/secrets
+GOOGLE_OAUTH_REDIRECT_FULL=http://localhost:8000/api/sessions/oauth/google`

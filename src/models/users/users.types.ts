@@ -1,6 +1,4 @@
 import { Document, Model } from "mongoose";
-
-
 export interface IUser {
     firstName: string;
     lastName: string;
@@ -10,7 +8,8 @@ export interface IUser {
     lastUpdated?: Date;
     gender: String;
     role: String;
-    provider: String
+    provider: String;
+    googelId?: String
 }
 
 export interface IUserDocument extends IUser, Document { }
